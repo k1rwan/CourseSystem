@@ -21,5 +21,9 @@
             %>
             两秒后自动跳转回主页
         </h1>
+            <div>
+                如果没有自动跳转，请点击
+                <a href="/CourseSystem">这里</a>
+            </div>
     </body>
 </html>
