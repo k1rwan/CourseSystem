@@ -4,7 +4,7 @@
     Author     : Thinker
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="javax.swing.text.Document"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,15 +48,15 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="classroom()">
         <div id="div1">
             <div class="intro-bar">
                 <img src="img/bupt.jpg" alt="bupt" style="width:50px;">
                 <div style="font-size:20px;position:absolute;left:20%;top:3%">欢迎回来，<%
-                        
-                        Entity.Teachers t=(Entity.Teachers)request.getAttribute("teacher");
-                        
-                        out.print(t.getTname());
+
+                    Entity.Teachers t = (Entity.Teachers) request.getAttribute("teacher");
+
+                    out.print(t.getTname());
                     %></div>
             </div>
             <form class="uk-form uk-form-stacked">
@@ -88,25 +88,45 @@
                 <div>
                     <input type="text" id="course-name">
                 </div>
-            </div>
-            <div class="uk-form-row uk-margin-top" style="margin-bottom:20px;">
-                <label class="uk-form-label uk-text-bold">时间：</label>
-            </div>
-            <div class="uk-form uk-margin-small-top">
-
-                <label class="uk-form-label uk-marigin-small-top" for="course-day">请选择星期：</label>
-                <div id="course-day" class="uk-form-row" style="margin-bottom:20px;">
-                    <i class="uk-icon-calendar">
+            </div>  
+            <% String[] classroom = (String[]) request.getAttribute("croom");
+                int room_num = Integer.parseInt(String.valueOf(request.getAttribute("croom_num")));
+            %>
+            <div class="uk-form uk-margin-small-top">                        
+                <div class="uk-margin-small-top uk-form-row">
+                    <label class="uk-form-label" for="course-day">请选择教室：</label>
+                    <div id="course-classroom-slot" class="uk-form" style="margin-bottom:20px;">
                         <select>
-                            <option id="Monday">星期一</option>
-                            <option id="Tuesday">星期二</option>
-                            <option id="Wednesday">星期三</option>
-                            <option id="Thursday">星期四</option>
-                            <option id="Friday">星期五</option>
-                            <option id="Saturday">星期六</option>
-                            <option id="Sunday">星期日</option>
+                            <% for (int i = 0; i < room_num; i++) 
+                            {%>
+                            <option><%out.print(classroom[i]);%></option>
+
+                            <%
+                                }
+                            %> 
                         </select>
-                    </i>
+                    </div>
+                </div>
+
+                <div class="uk-form-row uk-margin-top" style="margin-bottom:20px;">
+                    <label class="uk-form-label uk-text-bold">时间：</label>
+                </div>
+
+                <div class="uk-margin-small-top uk-form-row">
+                    <label class="uk-form-label" for="course-day">请选择星期：</label>
+                    <div id="course-week-slot" class="uk-form" style="margin-bottom:20px;">
+                        <i class="uk-icon-calendar">
+                            <select>
+                                <option id="Monday">星期一</option>
+                                <option id="Tuesday">星期二</option>
+                                <option id="Wednesday">星期三</option>
+                                <option id="Thursday">星期四</option>
+                                <option id="Friday">星期五</option>
+                                <option id="Saturday">星期六</option>
+                                <option id="Sunday">星期日</option>
+                            </select>
+                        </i>
+                    </div>
                 </div>
 
                 <div class="uk-margin-small-top uk-form-row">
