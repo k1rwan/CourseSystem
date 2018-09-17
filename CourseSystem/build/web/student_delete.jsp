@@ -4,6 +4,7 @@
     Author     : liyueyang
 --%>
 
+<%@page import="Entity.Schedule"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,7 +50,7 @@
                         Entity.Students s=(Entity.Students)request.getAttribute("student");
                         
                         out.print(s.getSname());
-                    %>${request.get("student").getSname()}</div>
+                    %></div>
             </div>
             <form class="uk-form uk-form-stacked">
                 <i class="uk-icon-angle-right uk-icon-small" style="position:absolute;top:45%;left:15%;"></i>
@@ -73,8 +74,10 @@
             </form>
         </div>
         <div id="div2">
-            <%int row = 20;
-                int col = 2;
+            <% Schedule[] sch=(Schedule[])request.getAttribute("schedule");
+            int course_num=Integer.parseInt(String.valueOf(request.getAttribute("schedule_num")));
+            String[] time={"8:00-9:50","10:00-11:50","13:30-15:20","15:30-17:20"};
+            String[] week={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
             %>
             <div><h2  align =" center" style="font-align:center"> 已选课程退选</h2></div>
             <div style=" max-height: 500px;overflow-y: scroll;">
@@ -83,19 +86,19 @@
                         <th style="width: 170px;font-size: 20px;">课程编号</th> 
                         <th style="width: 150px;font-size: 20px;">课程名</th>
                         <th style="width: 100px;font-size: 20px;">任课教师</th>
-                        <th style="width: 100px;font-size: 20px;">上课时间</th>
+                        <th style="width: 150px;font-size: 20px;">上课时间</th>
                         <th style="width: 100px;font-size: 20px;">上课地点</th>
                         <th style="width: 50px;font-size: 20px;">操作</th>
                     </tr>        
-                    <%for (int i = 0; i < row; i++) {
+                    <%for (int i = 0; i < course_num; i++) {
                     %>
                     <tr >
-                        <th style="width: 170px">000000000000</th> 
-                        <th style="width: 150px">高等离散数学</th>
-                        <th style="width: 100px">赵新超</th>
-                        <th style="width: 100px">8:00-10:00</th>
-                        <th style="width: 100px">教三311</th>
-                        <th style="width: 50px"><a href="" style="color:blue;"><i class="uk-icon-wheelchair"></i>退课</a></th>
+                        <th style="width: 170px"><% out.print(sch[i].getCNo()); %></th> 
+                        <th style="width: 150px"><% out.print(sch[i].getCName()); %></th>
+                        <th style="width: 100px"><% out.print(sch[i].getTName()); %></th>
+                        <th style="width: 150px"><% out.print(week[sch[i].getWeekNo()]+" "+time[sch[i].getTimeNo()]); %></th>
+                        <th style="width: 100px"><% out.print(sch[i].getPlaceNo()); %></th>
+                        <th style="width: 50px"><a href="course_drop?" style="color:blue;" name="course" value="${i}"><i class="uk-icon-wheelchair"></i>退课</a></th>
                     </tr>
                     <%
                         }

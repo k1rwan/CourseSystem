@@ -151,15 +151,14 @@
                 <img src="img/bupt.jpg" alt="bupt" style="width:50px;">
                 <div style="font-size:20px;position:absolute;left:20%;top:3%">欢迎回来，
                     <%
-
-                        Entity.Students s = (Entity.Students) request.getAttribute("student");
-
+                        
+                        Entity.Students s=(Entity.Students)request.getAttribute("student");
+                        
                         out.print(s.getSname());
-                    %>${request.get("student").getSname()}
+                    %>
                 </div>
             </div>
             <form class="uk-form uk-form-stacked">
-                <i class="uk-icon-angle-right uk-icon-small" style="position:absolute;top:20%;left:15%;"></i>
                 <div class="uk-form-row">
                     <a href="student_home?" class="homepage-over-lay">主页</a>                  
                 </div>

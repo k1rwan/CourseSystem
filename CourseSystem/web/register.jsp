@@ -36,7 +36,7 @@
                         <input type="password" id="form-s-password" name="Password">
                     </div>
                 </div>
-                <div class="uk-form-row" style="margin-bottom:40px;">
+                <div class="uk-form-row">
                     <label class="uk-form-label" for="form-s-confirm">确认密码：</label>
                     <div>
                         <input type="password" id="form-s-confirm" name="Confirm">

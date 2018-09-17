@@ -7,6 +7,7 @@ package controller;
 
 
 import Connection.DBConnection;
+import Entity.CoursesInClassroom;
 import Entity.Schedule;
 import Entity.Students;
 import Entity.Teachers;
@@ -41,8 +42,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Controller",
             loadOnStartup = 1,
             urlPatterns = {"/register",
-                           "/student",
-                           "/teacher",
                            "/register_success",
                            "/register_fail",
                            "/login_success",
@@ -50,10 +49,12 @@ import javax.servlet.http.HttpSession;
                            "/student_elective",
                            "/student_delete",
                            "/student_schedule",
-                           "/logout",
                            "/student_home",
-                           "/teacher_home"
-                           
+                           "/teacher_home",
+                           "/teacher_add",
+                           "/course_drop",
+                           "/course_select",
+                           "/logout"
                            })
 public class ControllerServlet extends HttpServlet {
 
@@ -124,6 +125,7 @@ public class ControllerServlet extends HttpServlet {
                     }
                 }catch(Exception e)	
                 {
+                    userPath="/register_fail";
                 }
             }
             request.setAttribute("warning",warning);
@@ -188,50 +190,72 @@ public class ControllerServlet extends HttpServlet {
                 }
                 request.setAttribute("warning",warning);
             } catch (SQLException ex) {
-                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                userPath="/login_fail";
             }
             
         }
         else if (userPath.equals("/student_elective")){
             try {
                 Schedule[] sch=new Schedule[100];
-                int course_time[][]=new int[6][8];
-                for (int i=0;i<6;i++){
-                    course_time[i]=new int[8];
-                }
-                int num=0;
-                String sql,sql2,sql3,sql4;
                 request.setAttribute("student",student_now);
-                for (int i=1;i<6;i++){
-                    for (int j=1;j<8;j++){
-                        int k=0;
-                        sql="select * from courses_in_classroom where TIMENO="+ String.valueOf(i)+" AND WEEKNO="+String.valueOf(j);
-                        ResultSet rs=dbconn.query(sql);
-                        while (rs.next()){
-                            k++;
-                            sql2="select * from courses where CNO="+ rs.getString("courses_CNO");
-                            ResultSet rs2=dbconn.query(sql2);
+                String sql,sql2,sql3,sql4;
+                int num=0;
+//                int course_time[][]=new int[6][8];
+//                for (int i=0;i<6;i++){
+//                    course_time[i]=new int[8];
+//                }
+//                
+//                for (int i=1;i<6;i++){
+//                    for (int j=1;j<8;j++){
+//                        int k=0;
+//                        sql="select * from courses_in_classroom where TIMENO="+ String.valueOf(i)+" AND WEEKNO="+String.valueOf(j);
+//                        ResultSet rs=dbconn.query(sql);
+//                        while (rs.next()){
+//                            k++;
+//                            sql2="select * from courses where CNO="+ rs.getString("courses_CNO");
+//                            ResultSet rs2=dbconn.query(sql2);
+//                            
+//                            if (rs2.next()){ 
+//                                sql3="select * from teachers where TNO="+ rs2.getString("teachers_TNO");
+//                                ResultSet rs3=dbconn.query(sql3);
+//                            
+//                                sql4="select * from classroom where ID="+ rs.getString("classroom_ID");
+//                                ResultSet rs4=dbconn.query(sql4);
+//
+//                                if (rs3.next() && rs4.next()){
+//                                    sch[num]=new Schedule(rs.getString("courses_CNO"),rs2.getString("CNAME"),rs3.getString("TNAME")
+//                                                    ,i,rs4.getString("CLNO"),rs2.getInt("CKIND"),rs2.getInt("LEFTNUM"),j);
+//                                    num++;
+//                                }
+//                            }
+//                            
+//                            
+//                        }
+//                        course_time[i][j]=k;
+//                    }
+//                }
+//                request.setAttribute("course_time",course_time);
+                sql="select * from courses_in_classroom";
+                ResultSet rs=dbconn.query(sql);
+                while (rs.next()){
+                    sql2="select * from courses where CNO="+ rs.getString("courses_CNO");
+                    ResultSet rs2=dbconn.query(sql2);
+                    if (rs2.next()){ 
+                        sql3="select * from teachers where TNO="+ rs2.getString("teachers_TNO");
+                        ResultSet rs3=dbconn.query(sql3);
                             
-                            if (rs2.next()){ 
-                                sql3="select * from teachers where TNO="+ rs2.getString("teachers_TNO");
-                                ResultSet rs3=dbconn.query(sql3);
-                            
-                                sql4="select * from classroom where ID="+ rs.getString("classroom_ID");
-                                ResultSet rs4=dbconn.query(sql4);
+                        sql4="select * from classroom where ID="+ rs.getString("classroom_ID");
+                        ResultSet rs4=dbconn.query(sql4);
 
-                                if (rs3.next() && rs4.next()){
-                                    sch[num]=new Schedule(rs.getString("courses_CNO"),rs2.getString("CNAME"),rs3.getString("TNAME")
-                                                    ,i,rs4.getString("CLNO"),rs2.getInt("CKIND"),rs2.getInt("LEFTNUM"),j);
-                                    num++;
-                                }
-                            }
-                            
-                            
+                        if (rs3.next() && rs4.next()){
+                            sch[num]=new Schedule(rs.getString("courses_CNO"),rs2.getString("CNAME"),
+                                    rs3.getString("TNAME"),rs.getInt("TIMENO"),rs4.getString("CLNO"),
+                                    rs2.getInt("CKIND"),rs2.getInt("LEFTNUM"),rs.getInt("WEEKNO"));
+                            num++;
                         }
-                        course_time[i][j]=k;
                     }
                 }
-                request.setAttribute("course_time",course_time);
+                
                 request.setAttribute("schedule",sch);
                 request.setAttribute("schedule_num",num);
                 
@@ -243,9 +267,9 @@ public class ControllerServlet extends HttpServlet {
             try {
                 int k=0;
                 Schedule[] sch=new Schedule[50]; 
-                String sql,sql2,sql3;
+                String sql,sql2,sql3,sql4,sql5;
                 request.setAttribute("student",student_now);
-                sql="select * from students_study_courses where SNO="+student_now.getSno();
+                sql="select * from students_study_courses where students_SNO="+student_now.getSno();
                 ResultSet rs=dbconn.query(sql);
                 while (rs.next()){
                     sql2="select * from courses where CNO="+ rs.getString("courses_CNO");
@@ -255,14 +279,23 @@ public class ControllerServlet extends HttpServlet {
                         sql3="select * from teachers where TNO="+ rs2.getString("teachers_TNO");
                         ResultSet rs3=dbconn.query(sql3);
 
-                        if (rs3.next()){
-                            sch[k]=new Schedule(rs.getString("courses_CNO"),rs2.getString("CNAME"),rs3.getString("TNAME"),rs2.getInt("CKIND"));
-                            k++;
+                        sql4="select * from courses_in_classroom where courses_CNO="+ rs.getString("courses_CNO");
+                        ResultSet rs4=dbconn.query(sql4);
+                        
+                        if (rs3.next() && rs4.next()){
+                            sql5="select * from classroom where ID="+ rs4.getString("classroom_ID");
+                            ResultSet rs5=dbconn.query(sql5);
+
+                            if (rs5.next()){
+                                sch[k]=new Schedule(rs.getString("courses_CNO"),rs2.getString("CNAME"),rs3.getString("TNAME"),
+                                        rs4.getInt("TIMENO"),rs5.getString("CLNO"),rs2.getInt("CKIND"),0,rs4.getInt("WEEKNO"));
+                                k++;
+                            }
                         }
                     }
                 }
                 request.setAttribute("schedule",sch);
-                request.setAttribute("schedule_num",k-1);
+                request.setAttribute("schedule_num",k);
             } catch (SQLException ex) {
                 Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -279,7 +312,52 @@ public class ControllerServlet extends HttpServlet {
             request.setAttribute("student",student_now);
             userPath="/student";
         }
-        
+        else if (userPath.equals("/course_drop")){
+            try {
+                String cno=request.getParameter("course");
+                request.setAttribute("student",student_now);
+                String orl="delete from students_study_courses where courses_CNO="+cno+
+                        " AND students_SNO="+student_now.getSno();
+                dbconn.delete(orl);
+                userPath="/student_home";
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (userPath.equals("/course_select")){
+            try {
+                String cno=request.getParameter("course");
+                request.setAttribute("student",student_now);
+                String orl="insert into students_study_courses value(?,?)";
+                dbconn.insert_cic(orl,student_now.getSno(),cno);
+                userPath="/student_home";
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (userPath.equals("/teacher_home")){
+            request.setAttribute("teacher",teacher_now);
+            userPath="/teacher";
+        }
+        else if (userPath.equals("/teacher_add")){
+            try {
+                request.setAttribute("teacher",teacher_now);
+                String sql;
+                String[] croom=new String[50];
+                sql="select * from classroom ";
+                ResultSet rs=dbconn.query(sql);
+                int num=0;
+                while (rs.next()){
+                    croom[num]=rs.getString("CLNO");
+                    num++;
+                }
+                request.setAttribute("croom_num",num);
+                request.setAttribute("croom",croom);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+         
         String url =userPath + ".jsp";
 
         try {

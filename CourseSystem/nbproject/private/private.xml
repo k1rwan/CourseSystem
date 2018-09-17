@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/student_elective.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/index.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/student_schedule.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/css/Course.css</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/register.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/teacher_add.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/teacher.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/student.jsp</file>
-            <file>file:/Users/liyueyang/Downloads/CourseSystem/web/student_delete.jsp</file>
+            <file>file:/Users/liyueyang/Desktop/Course/CourseSystem/web/teacher.jsp</file>
+            <file>file:/Users/liyueyang/Desktop/Course/CourseSystem/web/teacher_add.jsp</file>
+            <file>file:/Users/liyueyang/Desktop/Course/CourseSystem/web/student_elective.jsp</file>
+            <file>file:/Users/liyueyang/Desktop/Course/CourseSystem/web/student_schedule.jsp</file>
         </group>
     </open-files>
 </project-private>

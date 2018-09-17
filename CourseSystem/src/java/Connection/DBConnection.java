@@ -34,6 +34,11 @@ public class DBConnection {
         return rs;
     }
     
+    public void delete(String sql) throws SQLException{
+        Statement stmt=(Statement)conn.createStatement();
+        stmt.executeQuery(sql);
+    }
+    
     
     public void insert_student(String sql,Students student) throws SQLException{
         PreparedStatement pst=conn.prepareStatement(sql);
@@ -41,5 +46,12 @@ public class DBConnection {
         pst.setString(2,student.getSname());
         pst.setString(3,student.getSpassword());
         pst.executeUpdate();
-    }    
+    }   
+    
+    public void insert_cic(String sql,String sno,String cno) throws SQLException{
+        PreparedStatement pst=conn.prepareStatement(sql);
+        pst.setString(1, sno);
+        pst.setString(2,cno);
+        pst.executeUpdate();
+    }  
 }

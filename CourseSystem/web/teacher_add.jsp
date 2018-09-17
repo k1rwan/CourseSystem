@@ -52,26 +52,31 @@
         <div id="div1">
             <div class="intro-bar">
                 <img src="img/bupt.jpg" alt="bupt" style="width:50px;">
-                <div style="font-size:20px;position:absolute;left:20%;top:3%">欢迎回来，xxx</div>
+                <div style="font-size:20px;position:absolute;left:20%;top:3%">欢迎回来，<%
+                        
+                        Entity.Teachers t=(Entity.Teachers)request.getAttribute("teacher");
+                        
+                        out.print(t.getTname());
+                    %></div>
             </div>
             <form class="uk-form uk-form-stacked">
                 <i class="uk-icon-angle-right uk-icon-small" style="position:absolute;top:33%;left:15%;"></i>
                 <div class="uk-form-row">
-                    <a href="teacher.jsp" class="homepage-over-lay">主页</a>                  
+                    <a href="teacher_home?" class="homepage-over-lay">主页</a>                  
                 </div>
                 <HR style="position:absolute;top:25%;left:20%;"width="60%" color=#987cb9 SIZE=3>
                 <div class="uk-form-row">
-                    <a href="teacher-add.jsp" class="add-over-lay">添加课程</a>                   
+                    <a href="teacher-add?" class="add-over-lay">添加课程</a>                   
                 </div>
                 <div class="uk-form-row">
-                    <a href="teacher-drop.jsp" class="delete-over-lay">删除课程</a>
+                    <a href="teacher-drop?" class="delete-over-lay">删除课程</a>
                 </div>
                 <div class="uk-form-row">
-                    <a href="teacher-schedule.jsp" class="schedule-over-lay">课程表</a>
+                    <a href="teacher-schedule?" class="schedule-over-lay">课程表</a>
                 </div>
                 <HR style="position:absolute;top:65%;left:20%" width="60%" color=#987cb9 SIZE=3>
                 <div class="uk-form-row">
-                    <a href="index.jsp" class="logout-over-lay">注销</a>
+                    <a href="logout?" class="logout-over-lay">注销</a>
                 </div>
             </form>
         </div>

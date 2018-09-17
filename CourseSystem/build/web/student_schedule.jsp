@@ -43,7 +43,7 @@
                         Entity.Students s=(Entity.Students)request.getAttribute("student");
                         
                         out.print(s.getSname());
-                    %>${request.get("student").getSname()}</div>
+                    %></div>
             </div>
             <form class="uk-form uk-form-stacked">
                 <i class="uk-icon-angle-right uk-icon-small" style="position:absolute;top:57%;left:15%;"></i>
