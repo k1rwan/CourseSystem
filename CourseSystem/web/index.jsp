@@ -139,6 +139,7 @@
                 position:absolute;
                 width:30%;
                 height:100%;
+                background: #eff0dc;
             }
             #div2
             {
@@ -146,6 +147,7 @@
                 width:30%;
                 height:100%;
                 display:none;
+                background: #eff0dc;
             }
             #div3
             {
@@ -153,6 +155,7 @@
                 width:70%;
                 height:60%;
                 left:30%;
+                background: #f5f6eb;
             }
             #div4
             {
@@ -161,7 +164,7 @@
                 height:50%;
                 left:30%;
                 top:50%;
-                background-color:#F8F8FF;
+                background-color:#f5f6eb;
             }
             #wrapper{position:absolute;height:100%;width:100%;}
             /* slider */
@@ -181,7 +184,7 @@
                 <a class="nav-button-open"><i class="uk-icon-navicon uk-icon-large"></i></a>
                 <img src="img/bupt.jpg" alt="bupt" style="width:50px;">
             </div>
-            <div class="intro">欢迎来到<br><br><br><br>选课系统</div>
+            <div class="intro">欢迎来到<br><br><br>选课系统</div>
             <button class="uk-button uk-button-primary uk-width-1-4 intro-regster" onclick="location.href = 'register.jsp'">注册</button>
             <button class="uk-button uk-button-success uk-width-1-4 intro-login" onclick="location.href = 'login.jsp'">登陆</button>
 
